@@ -2,39 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { BookOpenIcon } from "@heroicons/react/24/outline";
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 
+
+
 const Navbar = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Add your search handling logic here
     console.log('Search term:', searchTerm);
-  }
- //DYNAMIC EFFECT HORVER
- useEffect(() => {
-    const handleMouseMove =(e) =>{
-        const cards = document.querySelectorAll('.dynamic-gradient');
-        cards.forEach((card) => {
-            const rect= card.getBoundingClientRect();
-            const x = clientX -rect.left;
-            const y = clientY -rect.left;
-            card.style.setProperty('..mouse-x',`${x}px`)
-            card.style.setProperty('..mouse-y',`${y}px`)
+  };
 
-        })
-    }
-    window.addEventListener('mousemove',handleMouseMove);
-    return () => window.removeEventListener('mousemove',handleMouseMove);
- },[])
+  // Dynamic Mouse Hover Effect
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const cards = document.querySelectorAll('.dynamic-gradient');
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    };
 
- useEffect(() =>{
-    window.scrollTo(0,0);
- },[])
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
-
-
-
+  // Scroll to Top on Mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 bg-gray-900/95 backdrop-blur border-b border-gray-800 shadow-[0_0_60px_-15px_rgba(96,165,250,0.3)]">
@@ -91,10 +90,11 @@ const Navbar = () => {
               <span className="text-lg md:text-xl animate-holo">&#x1F47D;</span>
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/20 via-transparent to-blue-500/20" />
             </div>
-            <div className="absolute -top-1 -right-1 h-2 w-2 md:h-3 md:w-3 bg-cyan-400 rounded-full shadow-glow-pulse" />
+            <div className="absolute -top-2 right-0 h-2 w-2 md:h-3 md:w-3 bg-cyan-400 rounded-full shadow-glow-pulse" />
           </div>
         </div>
       </div>
+    
     </nav>
   );
 };
